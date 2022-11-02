@@ -6,8 +6,8 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 
 @SpringBootApplication
 @EnableConfigurationProperties(CloudEntityClient.class)
-public class MyCustomAuthSourceApplication {
+public class Application {
     public static void main(String[] args) {
-        SpringApplication.run(MyCustomAuthSourceApplication.class, args);
+        SpringApplication.run(Application.class, args);
     }
 }

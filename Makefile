@@ -16,5 +16,5 @@ bearer-token: ## Get Bearer Token
 clean: ## Clean
 	./mvnw clean
 
-run: clean ## Launch App on :8888
+start : clean ## Start fake IdP app
 	./mvnw spring-boot:run
