@@ -1,0 +1,16 @@
+server:
+  port: 8888
+  error:
+    include-message: always
+    include-exception: true
+    include-stacktrace: always
+    include-binding-errors: always
+
+logging:
+  level:
+    com.example: trace
+    # dump (some) http requests to stdout
+    reactor:
+      netty:
+        http:
+          client: debug
