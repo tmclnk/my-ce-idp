@@ -8,10 +8,12 @@ auth flow using CloudEntity.
 ## Configuration
 
 ### application.properties
-You'll need to set these values in application.properties (which is .gitignore'd).
+You'll need to set these values in `src/main/resources/application.properties` (which is .gitignore'd).
 
 ```properties
+# cloudentity.issuer-uri=https://{{tid}}.us.authz.cloudentity.io/api/system/{{tid}}
 cloudentity.issuer-uri=
+# cloudentity.auth-server=https://{{tid}}.us.authz.cloudentity.io/{{tid}}/{{wsid}}
 cloudentity.auth-server=
 cloudentity.client-id=
 cloudentity.client-secret=
