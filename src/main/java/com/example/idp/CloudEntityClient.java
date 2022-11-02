@@ -2,6 +2,8 @@ package com.example.idp;
 
 import com.example.idp.payload.AcceptRequest;
 import com.example.idp.payload.TokenResponse;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -40,6 +42,7 @@ public class CloudEntityClient {
         log.trace(url);
         log.trace(accessToken);
         var httpClient = HttpClient.create().wiretap(true);
+        log.trace(toJSON(payload));
         var result = WebClient.builder()
                 .baseUrl(url)
                 .clientConnector(new ReactorClientHttpConnector(httpClient))
@@ -58,7 +61,7 @@ public class CloudEntityClient {
     }
 
     /**
-     * Fetches an Access Token from token endpoint using client-id and client-secret.
+     * Fetches a bearer token from token endpoint using client-id and client-secret.
      * @throws RuntimeException if there's an error response from the token service, or if the accessToken
      * is null or blank.
      */
@@ -75,13 +78,23 @@ public class CloudEntityClient {
                 .accept(MediaType.APPLICATION_JSON)
                 .retrieve()
                 .onStatus(HttpStatus::isError, resp -> resp.bodyToMono(String.class).map(Exception::new))
-                .bodyToMono(TokenResponse.class);
-        var token = response.blockOptional().orElseThrow(() -> new RuntimeException("Empty token response"));
-        if (token.getAccessToken() == null || token.getAccessToken().isBlank()) {
+                .bodyToMono(TokenResponse.class)
+                .blockOptional()
+                .orElseThrow(() -> new RuntimeException("Empty token response"));
+
+        log.trace(toJSON(response));
+        if (response.getAccessToken() == null || response.getAccessToken().isBlank()) {
             throw new RuntimeException("Access token value missing from response");
         }
-        assert token.getAccessToken() != null && !token.getAccessToken().isBlank();
-        var accessToken = token.getAccessToken();
-        return accessToken;
+        return response.getAccessToken();
+    }
+
+    private String toJSON(Object o) {
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            return mapper.writeValueAsString(o);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
