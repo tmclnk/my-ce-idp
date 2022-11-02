@@ -23,11 +23,10 @@ mvn spring-boot:run
 ```
 
 You'll need a client app to perform a redirect to get you valid
-`login_id` and `login_state` values on the login page. The 
-[demo app](https://dmsi-eval-only.us.authz.cloudentity.io/dmsi-eval-only/demo) should suffice.
+`login_id` and `login_state` values on the login page. The default demo app 
+in the workspace should suffice.
 
 
 ## Links
 
 - [HOWTO Create Custom IDP in CloudEntity](https://cloudentity.com/developers/howtos/identities/custom-idp/)
-- [DMSi Eval-Only ACP](https://dmsi-eval-only.us.authz.cloudentity.io/)
