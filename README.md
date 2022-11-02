@@ -5,8 +5,9 @@ auth flow using CloudEntity.
 
 ![login screen](./docs/login.png)
 
-## Variables
+## Configuration
 
+### application.properties
 You'll need to set these values in application.properties (which is .gitignore'd).
 
 ```properties
@@ -15,6 +16,10 @@ cloudentity.auth-server=
 cloudentity.client-id=
 cloudentity.client-secret=
 ```
+
+### Login URL
+
+Use `http://localhost:8888/login` as the login url in the CE IdP configuration.
 
 ## Running
 
