@@ -41,6 +41,7 @@ public class LoginController {
         log.info("Received login_id={}",  loginId);
         log.info("Received login_state={}", loginState);
         var loginCommand = new LoginCommand();
+        loginCommand.setUsername("demo");
         loginCommand.setLoginState(loginState);
         loginCommand.setLoginId(loginId);
 
