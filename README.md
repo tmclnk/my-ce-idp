@@ -28,7 +28,7 @@ Use `http://localhost:8888/login` as the login url in the CE IdP configuration.
 We're expecting Java 17.
 
 ```shell
-mvn spring-boot:run
+./mvnw spring-boot:run
 ```
 
 You'll need a client app to perform a redirect to get you valid
