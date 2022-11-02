@@ -3,6 +3,8 @@
 Dummy IdP to verify we can hack our legacy authentication into a modern
 auth flow using CloudEntity.
 
+![login screen](./docs/login.png)
+
 ## Variables
 
 You'll need to set these values in application.properties (which is .gitignore'd).
