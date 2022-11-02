@@ -33,4 +33,4 @@ build/
 .vscode/
 
 ### Sensitive Spring Properties
-application.properties
+src/main/resources/application.properties
