@@ -1,4 +1,4 @@
-package com.example.idp.payload;
+package com.example.idp.cloudentity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
@@ -6,7 +6,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class TokenResponse {
+class TokenResponse {
     @JsonProperty("access_token")
     private String accessToken;
     @JsonProperty("expires_in")

@@ -1,4 +1,4 @@
-package com.example.idp.payload;
+package com.example.idp.cloudentity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
@@ -11,7 +11,7 @@ import java.time.temporal.ChronoUnit;
 
 @Getter
 @Setter
-public class AcceptRequest {
+class AcceptRequest {
     @JsonProperty("auth_time")
     private String authTime;
     @JsonProperty("subject")

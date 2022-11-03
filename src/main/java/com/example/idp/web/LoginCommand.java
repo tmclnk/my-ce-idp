@@ -1,4 +1,4 @@
-package com.example.idp;
+package com.example.idp.web;
 
 import lombok.Getter;
 import lombok.Setter;

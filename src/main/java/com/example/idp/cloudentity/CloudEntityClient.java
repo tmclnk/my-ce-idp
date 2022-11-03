@@ -1,8 +1,6 @@
-package com.example.idp;
+package com.example.idp.cloudentity;
 
-import com.example.idp.payload.AcceptRequest;
-import com.example.idp.payload.AcceptResponse;
-import com.example.idp.payload.TokenResponse;
+import com.example.idp.web.LoginCommand;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Setter;

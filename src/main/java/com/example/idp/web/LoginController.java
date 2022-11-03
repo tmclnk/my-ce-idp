@@ -1,5 +1,6 @@
-package com.example.idp;
+package com.example.idp.web;
 
+import com.example.idp.cloudentity.CloudEntityClient;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;

@@ -1,4 +1,4 @@
-package com.example.idp.payload;
+package com.example.idp.cloudentity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class AcceptResponse {
+class AcceptResponse {
     @JsonProperty("redirect_to")
     private String redirectTo;
 }
