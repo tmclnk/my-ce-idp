@@ -16,7 +16,7 @@ import java.util.HashMap;
 /**
  * Presents a very basic login form which will post back to
  * the CloudEntity "accept" url and (eventually) redirect
- * the user to the "redirect_to" url returned by CloudEntity.
+ * the user to the consent screen provided by CloudEntity.
  */
 @Controller
 @RequestMapping("/login")
@@ -53,8 +53,8 @@ public class LoginController {
     @PostMapping(consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     public RedirectView onPost(LoginCommand loginCommand) {
         log.warn("ignoring password, we don't care");
-        cloudEntityClient.accept(loginCommand.getUsername(), loginCommand);
-        return new RedirectView("");
+        var redirectUrl = cloudEntityClient.accept(loginCommand.getUsername(), loginCommand);
+        return new RedirectView(redirectUrl);
     }
 
 }
