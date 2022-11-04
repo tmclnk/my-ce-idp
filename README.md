@@ -7,21 +7,28 @@ auth flow using CloudEntity.
 
 ## Configuration
 
+### Register Custom IdP in ACP
+
+You'll need to add an **Identity Provider** in ACP. This will be a **Custom IDP**. When prompted, the Login URL will be
+
+```text
+http://localhost:8888/login
+```
+
 ### application.properties
-You'll need to set these values in `src/main/resources/application.properties` (which is .gitignore'd).
+
+Create a `src/main/resources/application.properties` (which is .gitignore'd).
 
 ```properties
-# cloudentity.issuer-uri=https://{{tid}}.us.authz.cloudentity.io/api/system/{{tid}}
-cloudentity.issuer-uri=
-# cloudentity.auth-server=https://{{tid}}.us.authz.cloudentity.io/{{tid}}/{{wsid}}
-cloudentity.auth-server=
+# Replace {{tid}} with your Tenant ID.
+# Replace {{wsid}} with your Workspace Id, e.g. "demo".
+cloudentity.issuer-uri=https://{{tid}}.us.authz.cloudentity.io/api/system/{{tid}}
+cloudentity.auth-server=https://{{tid}}.us.authz.cloudentity.io/{{tid}}/{{wsid}}
+
+# Use the client-id and client-secret from the Custom IdP
 cloudentity.client-id=
 cloudentity.client-secret=
 ```
-
-### Login URL
-
-Use `http://localhost:8888/login` as the login url in the CE IdP configuration.
 
 ## Running
 
@@ -34,7 +41,6 @@ We're expecting Java 17.
 You'll need a client app to perform a redirect to get you valid
 `login_id` and `login_state` values on the login page. The default demo app 
 in the workspace should suffice.
-
 
 ## Links
 
