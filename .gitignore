@@ -32,5 +32,5 @@ build/
 ### VS Code ###
 .vscode/
 
-### Sensitive Spring Properties
-src/main/resources/application.properties
+### Sensitive Spring Properties ###
+src/main/resources/application*.properties
