@@ -8,6 +8,8 @@ import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
+import java.util.HashMap;
+import java.util.Map;
 
 @Getter
 @Setter
@@ -18,6 +20,12 @@ class AcceptRequest {
     private String subject;
     @JsonProperty("login_state")
     private String loginState;
+
+    /**
+     * Additional properties which go into the CloudEntity authentication context.
+     */
+    @JsonProperty("authentication_context")
+    private Map<String, Object> authenticationContext = new HashMap<>();
 
     public AcceptRequest(String subject, String loginState) {
         this.subject = subject;
