@@ -18,6 +18,9 @@ import reactor.netty.http.client.HttpClient;
 
 import javax.validation.constraints.NotBlank;
 import java.util.Base64;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Function;
 
 @Component
 @Validated
@@ -55,6 +58,13 @@ public class CloudEntityClient {
     @NotBlank
     private String clientSecret;
 
+    @Setter
+    private Function<LoginCommand, Map<String, Object>> userAttributeService = loginCommand -> {
+        var map = new HashMap<String,Object>();
+        map.put("my_attribute", "HELLO WORLD!!!!!!!!!!!");
+        return map;
+    };
+
     /**
      * POST to the CloudEntity "/accept" url.
      * Uses a Bearer token obtained using client_credentials grant.
@@ -62,13 +72,20 @@ public class CloudEntityClient {
      * @return a redirect url (presumably to a consent screen)
      */
     public String accept(String subject, LoginCommand command) {
-        var token = getAccessToken();
-        var payload = new AcceptRequest(subject, command.getLoginState());
+        // access token is our bearer token
+        var accessToken = getAccessToken();
+        var accept = new AcceptRequest(subject, command.getLoginState());
+
+        // decorate with custom attributes
+        accept.getAuthenticationContext().putAll(userAttributeService.apply(command));
+
         var url = String.format("%s/logins/%s/accept", issuerUri, command.getLoginId());
         log.trace(url);
-        assert token.getScope().contains("manage_logins"): "access token is missing 'manage_logins' scope";
+        assert accessToken.getScope().contains("manage_logins"): "access token is missing 'manage_logins' scope";
+
+        // create our own netty HttpClient so we have access to tracing the payload
         var httpClient = HttpClient.create().wiretap(true);
-        log.trace(toJSON(payload));
+        log.trace(toJSON(accept));
         var result = WebClient.builder()
                 .baseUrl(url)
                 .clientConnector(new ReactorClientHttpConnector(httpClient))
@@ -76,8 +93,8 @@ public class CloudEntityClient {
                 .post()
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
-                .header("Authorization", String.format("Bearer %s", token.getAccessToken()))
-                .body(BodyInserters.fromValue(payload))
+                .header("Authorization", String.format("Bearer %s", accessToken.getAccessToken()))
+                .body(BodyInserters.fromValue(accept))
                 .retrieve()
                 .onStatus(HttpStatus::isError, clientResponse -> clientResponse.bodyToMono(String.class).map(Exception::new))
                 .bodyToMono(AcceptResponse.class)
@@ -109,6 +126,7 @@ public class CloudEntityClient {
         return response;
     }
 
+    @SuppressWarnings("java:S112")
     private String toJSON(Object o) {
         ObjectMapper mapper = new ObjectMapper();
         try {
